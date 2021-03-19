@@ -11,10 +11,10 @@ namespace MailService.WebApi.Services
 {
     public class MailService : IMailService
     {
-        private readonly MailSettings _mailSettings;
-        public MailService(IOptions<MailSettings> mailSettings)
+        private readonly IMailSettings _mailSettings;
+        public MailService(IMailSettings mailSettings)
         {
-            _mailSettings = mailSettings.Value;
+            _mailSettings = mailSettings;
         }
         public async Task SendEmailAsync(MailRequest mailRequest)
         {
