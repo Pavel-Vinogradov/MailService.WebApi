@@ -27,7 +27,7 @@ namespace MailService.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailSettings, MailSettings>();
             services.AddTransient<IMailService, Services.MailService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>

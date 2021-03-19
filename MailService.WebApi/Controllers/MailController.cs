@@ -1,40 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MailService.WebApi.Models;
+﻿using MailService.WebApi.Models;
 using MailService.WebApi.Services;
-using Microsoft.AspNetCore.Http;
+using MailService.WebApi.Settings;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace MailService.WebApi.Controllers
 {
-[Route("api/action/[controller]")]
-[ApiController]
-public class MailController : ControllerBase
-{
-    private readonly IMailService mailService;
-
-    public MailController(IMailService mailService)
+    [Route("api/action/[controller]")]
+    [ApiController]
+    public class MailController : ControllerBase
     {
-        this.mailService = mailService;
-    }
-    [HttpPost("send")]
-    public async Task<IActionResult> SendMail([FromForm]MailRequest request)
-    {
-        try
-        {
-            await mailService.SendEmailAsync(request);
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            throw new Exception(ex.Message);
-          
+        private readonly IMailService _mailService;
+        private readonly IMailSettings _mailSettings;
+        private readonly ILogger<MailController> _logger;
 
+        public MailController(
+        IMailService mailService,
+        IMailSettings mailSettings,
+        ILogger<MailController> logger)
+        {
+            _mailService = mailService;
+            _mailSettings = mailSettings;
+            _logger = logger;
         }
-            
-    }
 
-}
+        [HttpPost("send")]
+        public async Task<IActionResult> SendMail([FromForm] MailRequest request)
+        {
+            try
+            {
+                request.ToEmail = _mailSettings.VacanciesMail;
+                await _mailService.SendEmailAsync(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost("sendCallBack")]
+        public async Task<IActionResult> SendCallBackMail([FromForm] MailRequest request)
+        {
+            try
+            {
+                request.ToEmail = _mailSettings.CallBackMail;
+                await _mailService.SendEmailAsync(request);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(500);
+            }
+        }
+
+    }
 }
