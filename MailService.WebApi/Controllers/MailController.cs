@@ -29,9 +29,8 @@ public class MailController : ControllerBase
         }
         catch (Exception ex)
         {
-
             throw new Exception(ex.Message);
-           
+          
 
         }
             

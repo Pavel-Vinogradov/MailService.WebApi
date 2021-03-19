@@ -36,6 +36,7 @@ namespace MailService.WebApi.Services
                             fileBytes = ms.ToArray();
                         }
                         builder.Attachments.Add(file.FileName, fileBytes, ContentType.Parse(file.ContentType));
+                        
                     }
                 }
             }
