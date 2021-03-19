@@ -11,7 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-
+using MailService.WebApi.Services;
+using MailService.WebApi.Settings;
 namespace MailService.WebApi
 {
     public class Startup
@@ -26,6 +27,8 @@ namespace MailService.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IMailService, Services.MailService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
