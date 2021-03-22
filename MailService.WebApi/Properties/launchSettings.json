@@ -4,12 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://api.webdemo.itwebnet.ru",
-     "sslPort": 0
-    },
-    "iis": {
-      "applicationUrl": "http://api.webdemo.itwebnet.ru",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:35996"
+//     "sslPort": 44353
     }
   },
   "profiles": {
@@ -26,7 +22,7 @@
       "dotnetRunMessages": "true",
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://api.webdemo.itwebnet.ru",
+      "applicationUrl": "https://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

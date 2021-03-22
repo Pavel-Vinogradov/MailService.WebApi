@@ -29,8 +29,8 @@ namespace MailService.WebApi.Controllers
         [HttpGet("test")]
         public async Task<IActionResult> Test()
         {
-            
-            return Ok();
+
+            return Ok("Привет");
         }
         
         [HttpPost("send")]
