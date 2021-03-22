@@ -35,6 +35,7 @@ namespace MailService.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MailService.WebApi", Version = "v1"});
             });
             services.AddCors();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +52,6 @@ namespace MailService.WebApi
 
             app.UseRouting();
             app.UseCors(builder => builder.AllowAnyOrigin());
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });

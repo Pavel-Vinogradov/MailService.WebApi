@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MailService.WebApi.Controllers
 {
-    [Route("api/action/[controller]")]
+    [Route("action/[controller]")]
     [ApiController]
     public class MailController : ControllerBase
     {
@@ -26,13 +26,22 @@ namespace MailService.WebApi.Controllers
             _logger = logger;
         }
 
-        [HttpPost("send")]
-        public async Task<IActionResult> SendMail([FromForm] MailRequest request)
+        [HttpGet("test")]
+        public async Task<IActionResult> Test()
         {
+            
+            return Ok();
+        }
+        
+        [HttpPost("send")]
+        public async Task<IActionResult> SendMail([FromBody] MailRequest request)
+        {
+            
             try
             {
                 request.ToEmail = _mailSettings.VacanciesMail;
                 await _mailService.SendEmailAsync(request);
+               
                 return Ok();
             }
             catch (Exception ex)
@@ -45,6 +54,7 @@ namespace MailService.WebApi.Controllers
         [HttpPost("sendCallBack")]
         public async Task<IActionResult> SendCallBackMail([FromForm] MailRequest request)
         {
+            
             try
             {
                 request.ToEmail = _mailSettings.CallBackMail;
